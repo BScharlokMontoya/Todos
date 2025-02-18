@@ -1,13 +1,18 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { LoggerMiddleware } from 'src/middlewares/logger.middleware';
+// import { LoggerMiddleware } from 'src/middlewares/logger.middleware
 import { UsersRepository } from './users.repository';
-import { response } from 'express';
+/* import { response } from 'express'; */
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './users.entity';
+import { UsersDbService } from './usersDB.service';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([User])],
   providers: [
     UsersService,
+    UsersDbService,
     UsersRepository,
     {
       provide: 'API_USERS',
